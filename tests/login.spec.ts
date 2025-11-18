@@ -1,9 +1,11 @@
 import {test, expect, Page } from '@playwright/test';
+import { login } from '../scripts/common';
 
-async function inputTextByLabel(page: Page, label: string, value: string) {
-  let xpath = `(//label[normalize-space(text())="${label}"]/following::input)[1]`;
-  await page.locator(xpath).fill(value);
-}
+// Chúng ta đem hàm login này vào common.ts
+// async function inputTextByLabel(page: Page, label: string, value: string) {
+//   let xpath = `(//label[normalize-space(text())="${label}"]/following::input)[1]`;
+//   await page.locator(xpath).fill(value);
+// }
 
 async function verifyErrorMessageByLabel(page: Page, fieldName: string, errorMessage: string) {
   // //label[text()='Email']/following-sibling::div//span[normalize-space(text())= 'This field can not be empty']
@@ -14,11 +16,14 @@ async function verifyErrorMessageByLabel(page: Page, fieldName: string, errorMes
     // Nếu chèn expect trong function thì test script sẽ không rõ ràng (không thấy phần verify)
 }
 
-async function login(page: Page, username: string, password: string) {
-  await page.goto("http://localhost:3000/admin/login");
-  await inputTextByLabel(page, "Email", username);
-  await inputTextByLabel(page, "Password", password);
-}
+// Chúng ta đem hàm login này vào common.ts
+
+// async function login(page: Page, username: string, password: string) {
+//   await page.goto("http://localhost:3000/admin/login");
+//   await inputTextByLabel(page, "Email", username);
+//   await inputTextByLabel(page, "Password", password);
+//   await page.getByRole("button", { name: "SIGN IN"}).click();
+// }
 
 test("Log in to Evershop page successfully", async ({ page }) => {
   // If we want to know whether should we use await or not, hover to the function, if it return promises --> use await
@@ -29,7 +34,7 @@ test("Log in to Evershop page successfully", async ({ page }) => {
   // await inputTextByLabel(page, "Password", "17101406"); (DRY)
   // await page.getByPlaceholder("Email").fill("tony@gmail.com");
   // await page.getByPlaceholder("Password").fill("17101406");
-  await page.getByRole("button", { name: "SIGN IN"}).click();
+  // await page.getByRole("button", { name: "SIGN IN"}).click();
   await expect(page.getByRole("heading", { name: "Dashboard"})).toBeVisible();
 });
 
