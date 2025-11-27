@@ -21,3 +21,23 @@ test("Verify user acccess to new product page successfully", async ({ page }) =>
     let xpathHeading = `//h1[normalize-space(text()) = "Create a new product"]`
     await expect(page.locator(xpathHeading)).toBeVisible();
 });
+
+test("Verify user create new product successfully", async ( { page }) => {
+  await loginPage.adminLogin();
+  await newProductPage.clickMenuByLabel("New Product");
+  let xpathHeading = `//h1[normalize-space(text()) = "Create a new product"]`
+  await expect(page.locator(xpathHeading)).toBeVisible();
+  await newProductPage.inputTextByLabel("Name", "Giày Thể Thao Biti's Hunter Nam Màu Xanh Lá Cây");
+  await newProductPage.inputTextByLabel("SKU", "HSM013100XLC");
+  await newProductPage.inputTextByLabel("Price", "799 999 đồng");
+  await newProductPage.inputTextByLabel("Weight", "0.2");
+  await newProductPage.selectDropdownByLable("Tax class", "Taxable Goods");
+  await newProductPage.inputTextByLabel("Quantity", "0.2");
+  await newProductPage.inputTextByLabel("Url key", "giay-the-thao-biti-s-hunter-nam-mau-xanh-la-cay-hsm013100xlc");
+  await newProductPage.inputTextByLabel("Meta title", "Giay Bitis");
+  await newProductPage.inputTextByLabel("Meta keywords", "Bitis Nam xanh la");
+  await newProductPage.inputTextAreaByLabel("Meta description", "Meta description description description");
+  await newProductPage.selectDropdownByLable("Attribute group", "Default");
+  await newProductPage.selectDropdownByLable("Color", "White");
+  await newProductPage.selectDropdownByLable("Size", "SM");
+});
