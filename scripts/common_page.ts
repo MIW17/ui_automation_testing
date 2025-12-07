@@ -2,6 +2,12 @@ import { test, expect, Page} from '@playwright/test';
 
 export class CommonPage {
   page: Page;
+  searchComponentLocator?: string;
+  // ta muốn viết hàm search trong page cha (page common)
+  // thì khai báo biến searchComponentLocator trong này (id trong element)
+  // rồi vào từng page con mình khai báo, ví dụ ở page Products thì có id là keyword thì mình khai báo:
+  // this.searchComponentLocator = '#keyword'; (tức là id á)
+  // Thì khi page con extends từ page cha → hàm trong page cha sẽ apply id value từ page con 
 
   constructor(page: Page) {
     this.page = page;
@@ -16,6 +22,11 @@ export class CommonPage {
 
   async inputTextByLabel(label: string, value: string) {
     let xpath = `(//label[normalize-space(text())="${label}"]/following::input)[1]`;
+    // thỉnh thoảng nó sẽ bị nhanh quá chưa kịp input nên mình click vào đi rồi hãy input
+    let locator = this.page.locator(xpath);
+    // hơn nữa, chúng ta nên làm thêm động tác clear (để clear default value)
+    await locator.clear();
+    await locator.click();
     await this.page.locator(xpath).fill(value);
   }
 
@@ -47,5 +58,20 @@ export class CommonPage {
   async verifyPopUpMessage(message: string) {
     let xpath = `//div[@role="alert" and normalize-space(text())="${message}"]`;
     await expect(this.page.locator(xpath)).toBeVisible();
+  }
+
+  async searchInComponentByValue(input: string) {
+    let locator = this.page.locator(this.searchComponentLocator ?? ''); // nếu không có ?? '' thì nó báo lỗi Argument of type 'string | undefined' is not assignable to parameter of type 'string'. Type 'undefined' is not assignable to type 'string'
+    await locator.click();
+    await locator.clear();
+    await locator.fill(input);
+    await this.page.keyboard.press("Enter");
+  }
+
+  async getInputValueByLabel(label: string) {
+    let xpath = `(//label[normalize-space(text())="${label}"]/following::input)[1]`;
+    let locator = this.page.locator(xpath);
+    let value = await locator.getAttribute("value"); // nhìn locator để biết cần lấy attribute value
+    return value // get giá trị thì nhớ return
   }
 }

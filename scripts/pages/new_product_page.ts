@@ -3,6 +3,8 @@ import { CommonPage } from "../common_page";
 import path from "path";
 
 export class NewProductPage extends CommonPage {
+    readonly xpathHeading = `//h1[normalize-space(text()) = "Create a new product"]`;
+    // khai báo trong class thì không cần let
     constructor(page: Page) {
         super(page);
     }
