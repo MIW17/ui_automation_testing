@@ -29,10 +29,11 @@ test("Verify user create new product successfully", async ( { page }) => {
   await expect(page.locator(xpathHeading)).toBeVisible();
   await newProductPage.inputTextByLabel("Name", "Giày Thể Thao Biti's Hunter Nam Màu Xanh Lá Cây");
   await newProductPage.inputTextByLabel("SKU", "HSM013100XLC");
-  await newProductPage.inputTextByLabel("Price", "799 999 đồng");
+  await newProductPage.inputTextByLabel("Price", "8000");
   await newProductPage.inputTextByLabel("Weight", "0.2");
   await newProductPage.selectDropdownByLable("Tax class", "Taxable Goods");
-  await newProductPage.inputTextByLabel("Quantity", "0.2");
+  await newProductPage.uploadProductImage("data/images/bitis_image.jpg");
+  await newProductPage.inputTextByLabel("Quantity", "100");
   await newProductPage.inputTextByLabel("Url key", "giay-the-thao-biti-s-hunter-nam-mau-xanh-la-cay-hsm013100xlc");
   await newProductPage.inputTextByLabel("Meta title", "Giay Bitis");
   await newProductPage.inputTextByLabel("Meta keywords", "Bitis Nam xanh la");
@@ -40,4 +41,10 @@ test("Verify user create new product successfully", async ( { page }) => {
   await newProductPage.selectDropdownByLable("Attribute group", "Default");
   await newProductPage.selectDropdownByLable("Color", "White");
   await newProductPage.selectDropdownByLable("Size", "SM");
+  await newProductPage.selectRadioButtonByLable("Status", "Enabled");
+  await newProductPage.selectRadioButtonByLable("Visibility", "Visible");
+  await newProductPage.selectRadioButtonByLable("Manage stock?", "Yes");
+  await newProductPage.selectRadioButtonByLable("Stock availability", "Yes");
+  await newProductPage.clickButtonByLable("Save");
+  await newProductPage.verifyPopUpMessage("Product saved successfully!");
 });

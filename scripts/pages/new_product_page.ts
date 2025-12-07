@@ -1,14 +1,16 @@
 import { Page } from "@playwright/test";
 import { CommonPage } from "../common_page";
+import path from "path";
 
 export class NewProductPage extends CommonPage {
     constructor(page: Page) {
         super(page);
     }
-    async clickMenuByLabel(label: string) {
-        // let xpath = `//a[normalize-space(text())='${label}']`;
-        // Đối với menu, hoặc khi mình muốn test ấn vào một khu vực nào đó, thì nên chỉ định thêm rõ area của nó
-        let xpath = `//div[contains(concat(' ',normalize-space(@class),' '),' admin-nav ')]//a[normalize-space(text())='${label}']`;
-        await this.page.locator(xpath).click();
+
+    // Ở đây không viết hàm chung trong common_page nên mình không cần bắt theo xpath cũng được
+    async uploadProductImage(filePath: string) {
+        await this.page.locator('#images input').setInputFiles(path.join(process.cwd(), filePath));
     }
+    // __dirname: Là biến toàn cục, nó xét tới cái file đang được thự thi
+    // process.cwd(): xét tới cái current working directory (là cái repo đang làm)
 }
