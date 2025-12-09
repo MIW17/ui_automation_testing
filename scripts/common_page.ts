@@ -74,4 +74,24 @@ export class CommonPage {
     let value = await locator.getAttribute("value"); // nhìn locator để biết cần lấy attribute value
     return value // get giá trị thì nhớ return
   }
+
+  getIdFromUrl() {
+    let url = this.page.url();
+    let id = url.split("/").pop() ?? ''; // pop lấy ra phần tử cuối
+    return id;
+  }
+  
+  async getCookieHeader() {
+            // Để được author thực hiện request delete thì cần get cookies từ context
+        let cookies = await this.page.context().cookies(); // có hai cái là asid và sid. Nó trả về dạng này:
+            //   [
+            //    { name: "asid", value: "...", domain: "localhost", ... },
+            //    { name: "sid", value: "...", domain: "localhost", ... },
+            //    { name: "other_cookie", value: "...", domain: "localhost", ... }
+            //  ]
+        let asid = cookies.find(v => v.name == "asid"); // tìm kiếm trong mảng cookies và gán cho biến asid toàn bộ đối tượng cookie có tên là "asid".
+        let sid = cookies.find(v => v.name == "sid");
+        let cookieHeader = `sid=${sid?.value}; asid=${asid?.value}`;
+        return cookieHeader;
+  }
 }
