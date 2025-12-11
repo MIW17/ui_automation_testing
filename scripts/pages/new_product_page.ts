@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { Page, request as apiRequest } from "@playwright/test";
 import { CommonPage } from "../common_page";
 import path from "path";
 
@@ -15,4 +15,16 @@ export class NewProductPage extends CommonPage {
     }
     // __dirname: Là biến toàn cục, nó xét tới cái file đang được thự thi
     // process.cwd(): xét tới cái current working directory (là cái repo đang làm)
+
+    async createProduct(body: any, cookieHeader: string) {
+        let request = await apiRequest.newContext();
+        let response = await request.post(`http://localhost:3000/api/products`, {
+            headers: {
+            'Cookie': cookieHeader,
+            'Content-Type': "application/json"
+            },
+            data: body
+        });
+        return response;
+    }
 }

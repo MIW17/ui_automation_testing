@@ -147,3 +147,7 @@ test("Verify user create new product successfully 02", async ( { page }) => {
   expect(await productsPage.getInputValueByLabel("Name")).toEqual(productName); // ko cần thực hiện hành động nên không cần await
   expect(await productsPage.getInputValueByLabel("SKU")).toEqual(sku);
 });
+
+
+// Nếu muốn test việc edit product, mình dùng API Post tạo product rồi test UI cái việc edit product
+// Thay vì phải làm y như trên rồi mới edit product
