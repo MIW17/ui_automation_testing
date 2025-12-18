@@ -12,7 +12,7 @@ export class ProductsPage extends CommonPage {
 
     async deleteProduct(productId: string, cookieHeader: string) {
         let request = await apiRequest.newContext();
-        await this.page.context().request.delete(`http://localhost:3000/api/products/${productId}`, {
+        await this.page.context().request.delete(`${UI_PRODUCTS_PATH}/${productId}`, {
             headers: {
             'Cookie': cookieHeader
             }

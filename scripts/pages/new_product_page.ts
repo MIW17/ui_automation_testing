@@ -18,7 +18,7 @@ export class NewProductPage extends CommonPage {
 
     async createProduct(body: any, cookieHeader: string) {
         let request = await apiRequest.newContext();
-        let response = await request.post(`http://localhost:3000/api/products`, {
+        let response = await request.post(UI_PRODUCTS_PATH, {
             headers: {
             'Cookie': cookieHeader,
             'Content-Type': "application/json"

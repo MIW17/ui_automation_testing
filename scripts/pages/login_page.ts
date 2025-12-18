@@ -11,8 +11,8 @@ import { CommonPage } from "../common_page";
   export class LoginPage extends CommonPage {
     // page: Page // we need `constructor` 
     // Thêm biến constant để khai báo username và password
-    readonly username = "tony@gmail.com";
-    readonly password = "17101406";
+    readonly username = ADMIN_USER_NAME;
+    readonly password = ADMIN_PASSWORD;
     // Nhưng mà như vậy thì chẳng lẽ ghi trong test là: await loginPage.login(loginPage.username, loginPage.password);
     // Như vậy dài và xấu
     constructor(page: Page) { // → khai báo biến page là một thuộc tính của class này
@@ -22,7 +22,7 @@ import { CommonPage } from "../common_page";
 
     // Bây giờ mình đưa hàm login từ common.ts vào
     async login(username: string, password: string) {
-      await this.page.goto("http://localhost:3000/admin/login");
+      await this.page.goto(UI_ADMIN_PATH);
       await this.inputTextByLabel("Email", username);
       await this.inputTextByLabel("Password", password);
       await this.page.getByRole("button", { name: "SIGN IN"}).click();
