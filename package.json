@@ -2,13 +2,20 @@
   "name": "ui_automation_testing",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:local": "set TEST_ENV=local && npx playwright test tests/deprecated_login.spec.ts --headed --project=chromium",
+    "test:sit1": "set TEST_ENV=sit1 && npx playwright test test/login.spec.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
     "@playwright/test": "^1.56.1",
-    "@types/node": "^24.10.0"
+    "@types/node": "^24.10.0",
+    "allure-playwright": "^3.13.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
   }
 }

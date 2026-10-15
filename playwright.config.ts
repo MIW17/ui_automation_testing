@@ -22,7 +22,14 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+      ["line"],
+      ["allure-playwright", { resultsDir: "allure-results"}]
+  ],
+  // nhớ chạy lệnh npx playwright install
+  // rồi chạy lệnh npm install --save-dev @playwright/test allure-playwright allure-js-commons
+  // muốn mở test thì: allure awsome --single-file ./allure-results → generate single index.html file
+
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
