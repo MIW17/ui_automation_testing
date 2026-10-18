@@ -17,7 +17,7 @@ export class LoginPage implements ILoginPage {
     }
 
     public static async getLoginPage(page: Page): Promise<ILoginPage> {
-        const locators = createLoginLocators(page)
+         const locators = createLoginLocators(page)
 
         // Playwright automatically waits and throws a TimeoutError if not visible
         await locators.signInButton.waitFor({ state: 'visible' })
