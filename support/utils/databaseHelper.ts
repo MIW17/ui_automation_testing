@@ -1,5 +1,5 @@
 import { Client } from 'pg'
-import { dbConfig } from '../../config/index';
+import { dbConfig } from '../../config';
 
 export interface IDatabaseHelper {
     connect(): Promise<void>

@@ -7,26 +7,22 @@ export interface IAppBar {
 }
 
 export class AppBar implements IAppBar {
-    page: Page
-    locators: AppBarLocators
+    readonly page: Page
+    readonly locators: AppBarLocators
 
-    private constructor(page: Page, locators: AppBarLocators) {
+    constructor(page: Page) {
         this.page = page
-        this.locators = locators
-    }
-
-    public static async getAppBar(page: Page) {
-        const locators = createAppBarLocators(page)
-        await locators.searchBar.waitFor({ state: 'visible' })
-
-        return new AppBar(page, locators)
+        this.locators = createAppBarLocators(page)
     }
 
     async logout(): Promise<ILoginPage> {
         return await test.step('Logout from Evershop', async () => {
+            await this.locators.searchBar.waitFor({ state: 'visible' })
+
             await this.locators.userProfile.profileDropdown.click()
             await this.locators.userProfile.logoutButton.click()
-            return LoginPage.getLoginPage(this.page)
+
+            return new LoginPage(this.page)
         })
     }
 }

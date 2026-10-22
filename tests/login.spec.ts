@@ -1,7 +1,5 @@
-import {test, Page, expect} from "@playwright/test"
-import {LoginPage} from "../support/pages/login"
-import {AppBar} from "../support/pages/appBar"
-import {DatabaseHelper} from "../support/utils/DatabaseHelper"
+import {test, expect} from '../support/fixtures'
+import {DatabaseHelper, IDatabaseHelper} from "../support/utils/databaseHelper"
 import {customerQueries} from "../support/queries"
 
 test.describe('Admin user', async () => {
@@ -16,7 +14,7 @@ test.describe('Admin user', async () => {
         await db?.disconnect()
     })
 
-    test('Login as Admin user', async ( {page }) => {
+    test('Login as Admin user', async ( { page, login, logout }) => {
         const testData = {
             email: 'tony@gmail.com',
             password: 'Testing01'
@@ -32,15 +30,7 @@ test.describe('Admin user', async () => {
         })
 
         await page.goto('http://localhost:3000/admin/login')
-        const loginPage = await LoginPage.getLoginPage(page)
-
-        await loginPage.adminLogin(
-            testData.email,
-            testData.password
-        )
-
-        const appBar = await AppBar.getAppBar(page)
-
-        await appBar.logout()
+        await login('tony@gmail.com', 'Testing01')
+        await logout()
     })
 })
