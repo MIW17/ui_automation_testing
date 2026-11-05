@@ -14,7 +14,7 @@ export class DatabaseHelper implements IDatabaseHelper {
         this.client = client
     }
 
-    public static getDatabaseInstance(): IDatabase {
+    public static getDatabaseInstance(): IDatabaseHelper {
         const client = new Client(dbConfig)
         return new DatabaseHelper(client)
     }

@@ -1,4 +1,4 @@
-import * as dotenv from 'dotenv'
+import dotenv from 'dotenv'
 import path from 'path'
 
 // 1) Determine the current environment, by default is local
@@ -16,7 +16,7 @@ dotenv.config({ path: envFilePath })
 // 4) Export the DB env variables for use in other parts of the application
 export const dbConfig = {
     host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
+    port: Number(process.env.DB_PORT),
     name: process.env.DB_NAME,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD
